@@ -9,10 +9,7 @@ import {
   PaginatedResponse,
 } from '../types';
 
-// ---------------------------------------------------------------------------
 // Axios instance
-// ---------------------------------------------------------------------------
-
 export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: { 'Content-Type': 'application/json' },
@@ -56,10 +53,7 @@ api.interceptors.response.use(
   },
 );
 
-// ---------------------------------------------------------------------------
 // Auth
-// ---------------------------------------------------------------------------
-
 export const authApi = {
   register: (data: {
     email: string;
@@ -89,10 +83,7 @@ export const authApi = {
   updateMe: (data: Partial<User>) => api.patch<User>('/auth/me/', data),
 };
 
-// ---------------------------------------------------------------------------
 // Polls
-// ---------------------------------------------------------------------------
-
 export const pollsApi = {
   list: (params?: {
     status?: string;
@@ -137,10 +128,7 @@ export const pollsApi = {
     api.get(`/polls/${shortId}/export/png/`, { responseType: 'blob' }),
 };
 
-// ---------------------------------------------------------------------------
 // Helpers
-// ---------------------------------------------------------------------------
-
 export function downloadBlob(blob: Blob, filename: string) {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
