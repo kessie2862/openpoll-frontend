@@ -1,65 +1,67 @@
-import Image from "next/image";
+import Link from 'next/link';
+import { Zap, Globe, Shield } from 'lucide-react';
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center">
+      <div className="fade-up max-w-2xl">
+        <div className="inline-flex items-center gap-2 pill bg-(--accent-glow) text-(--accent) border border-(--accent-dim) mb-8">
+          <div className="live-dot" />
+          Real-time results via WebSockets
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <h1 className="text-6xl font-black tracking-tight mb-4">
+          Polls that update
+          <br />
+          <span className="text-(--accent) serif italic">as you watch</span>
+        </h1>
+
+        <p className="text-(--text-secondary) text-lg mb-10 max-w-md mx-auto leading-relaxed">
+          Build polls with single, multi, ranked-choice and open text questions.
+          Share anywhere. See votes land in real time.
+        </p>
+
+        <div className="flex items-center justify-center gap-3">
+          <Link href="/register">
+            <button className="px-6 py-3 rounded-lg bg-(--accent) text-(--bg-base) font-bold hover:bg-(--accent-dim) transition-colors">
+              Start for free
+            </button>
+          </Link>
+          <Link href="/polls">
+            <button className="px-6 py-3 rounded-lg border border-(--border) text-(--text-secondary) font-semibold hover:border-(--border-bright) hover:text-(--text-primary) transition-colors">
+              Explore polls
+            </button>
+          </Link>
         </div>
-      </main>
+
+        <div className="grid grid-cols-3 gap-6 mt-16 text-left">
+          {[
+            {
+              icon: <Zap size={18} />,
+              title: 'Live results',
+              desc: 'WebSocket broadcast — every vote updates all viewers instantly.',
+            },
+            {
+              icon: <Globe size={18} />,
+              title: 'Embeddable',
+              desc: 'One-line iframe snippet. Drop your poll on any site.',
+            },
+            {
+              icon: <Shield size={18} />,
+              title: 'Fraud prevention',
+              desc: 'IP + browser fingerprint deduplication on every vote.',
+            },
+          ].map((f) => (
+            <div key={f.title} className="card-glow p-4">
+              <span className="text-(--accent) mb-3 block">{f.icon}</span>
+              <p className="font-semibold text-sm mb-1">{f.title}</p>
+              <p className="text-xs text-(--text-muted) leading-relaxed">
+                {f.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
