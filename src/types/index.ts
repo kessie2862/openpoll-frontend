@@ -1,7 +1,4 @@
-// ---------------------------------------------------------------------------
 // Auth
-// ---------------------------------------------------------------------------
-
 export interface User {
   id: string;
   email: string;
@@ -19,10 +16,7 @@ export interface AuthTokens {
   refresh: string;
 }
 
-// ---------------------------------------------------------------------------
 // Poll
-// ---------------------------------------------------------------------------
-
 export type PollStatus = 'draft' | 'active' | 'closed' | 'archived';
 export type QuestionType = 'single' | 'multi' | 'ranked' | 'open_text';
 export type EmbedTheme = 'light' | 'dark' | 'auto';
@@ -64,6 +58,7 @@ export interface Poll {
   cover_image_url: string;
   status: PollStatus;
   is_public: boolean;
+  password: string;
   allow_anonymous: boolean;
   show_results_before_vote: boolean;
   show_results_after_close: boolean;
@@ -92,10 +87,7 @@ export interface PublicUser {
   avatar_url: string;
 }
 
-// ---------------------------------------------------------------------------
 // Vote submission
-// ---------------------------------------------------------------------------
-
 export interface VoteResponse {
   question_id: string;
   choice_ids?: string[];
@@ -109,10 +101,7 @@ export interface VotePayload {
   responses: VoteResponse[];
 }
 
-// ---------------------------------------------------------------------------
 // Results
-// ---------------------------------------------------------------------------
-
 export interface RankedChoiceRound {
   tally: Record<string, number>;
   total_votes: number;
@@ -160,10 +149,7 @@ export interface PollResults {
   questions: QuestionResult[];
 }
 
-// ---------------------------------------------------------------------------
 // WebSocket messages
-// ---------------------------------------------------------------------------
-
 export type WSMessageType = 'initial_results' | 'results_updated' | 'pong';
 
 export interface WSMessage {
@@ -171,10 +157,7 @@ export interface WSMessage {
   payload?: PollResults;
 }
 
-// ---------------------------------------------------------------------------
 // API responses
-// ---------------------------------------------------------------------------
-
 export interface PaginatedResponse<T> {
   count: number;
   next: string | null;
@@ -187,19 +170,16 @@ export interface APIError {
   [key: string]: unknown;
 }
 
-// ---------------------------------------------------------------------------
-// Poll builder (local form state — not API shape)
-// ---------------------------------------------------------------------------
-
+// Poll builder
 export interface ChoiceDraft {
-  id: string; // temp local id
+  id: string;
   text: string;
   color: string;
   order: number;
 }
 
 export interface QuestionDraft {
-  id: string; // temp local id
+  id: string;
   text: string;
   description: string;
   question_type: QuestionType;
