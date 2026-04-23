@@ -96,7 +96,6 @@ function BarResults({ question }: { question: QuestionResult }) {
   const sorted = [...question.choices].sort(
     (a, b) => b.vote_count - a.vote_count,
   );
-  const max = sorted[0]?.vote_count || 1;
 
   return (
     <div className="space-y-3">
@@ -127,7 +126,7 @@ function BarResults({ question }: { question: QuestionResult }) {
                   : undefined,
               }}
               initial={{ width: 0 }}
-              animate={{ width: `${(choice.vote_count / max) * 100}%` }}
+              animate={{ width: `${choice.vote_percentage}%` }}
               transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
             />
           </div>
@@ -139,7 +138,6 @@ function BarResults({ question }: { question: QuestionResult }) {
 
 function RankedResults({
   result,
-  choices,
 }: {
   result: NonNullable<QuestionResult['ranked_choice_result']>;
   choices: QuestionResult['choices'];
