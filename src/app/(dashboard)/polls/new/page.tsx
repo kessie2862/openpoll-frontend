@@ -7,8 +7,17 @@ import { usePollBuilderStore } from '@/src/store/poll-builder';
 import { pollsApi, extractErrorMessage } from '@/src/lib/api';
 import { QuestionEditor } from '@/src/components/poll/QuestionEditor';
 import { PageShell } from '@/src/components/layout/PageShell';
-import { Plus, Rocket, Eye, EyeOff, Lock, Users, Calendar } from 'lucide-react';
 import { PollDraft } from '@/src/types';
+import {
+  Plus,
+  Rocket,
+  Eye,
+  EyeOff,
+  Lock,
+  Users,
+  Calendar,
+  X,
+} from 'lucide-react';
 
 export default function NewPollPage() {
   const router = useRouter();
@@ -160,7 +169,60 @@ export default function NewPollPage() {
                   </motion.div>
                 ))}
               </div>
-
+              {/* Tags */}
+              <div className="card-glow p-5">
+                <label className="block text-xs font-semibold text-(--text-secondary) uppercase tracking-wider mb-3">
+                  Tags
+                  <span className="ml-2 text-(--text-muted) normal-case font-normal">
+                    — helps people discover your poll
+                  </span>
+                </label>
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {draft.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-(--accent-glow) border border-(--accent-dim) text-(--accent)"
+                    >
+                      #{tag}
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setField(
+                            'tags',
+                            draft.tags.filter((t) => t !== tag),
+                          )
+                        }
+                        className="hover:text-red-400 transition-colors"
+                      >
+                        <X size={11} />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    'politics',
+                    'tech',
+                    'sports',
+                    'food',
+                    'music',
+                    'gaming',
+                    'science',
+                    'other',
+                  ]
+                    .filter((t) => !draft.tags.includes(t))
+                    .map((tag) => (
+                      <button
+                        key={tag}
+                        type="button"
+                        onClick={() => setField('tags', [...draft.tags, tag])}
+                        className="px-3 py-1 rounded-full text-xs font-semibold border border-(--border) text-(--text-secondary) hover:border-(--accent-dim) hover:text-(--accent) hover:bg-(--accent-glow) transition-all"
+                      >
+                        + {tag}
+                      </button>
+                    ))}
+                </div>
+              </div>
               <button
                 onClick={addQuestion}
                 className="w-full py-3 rounded-lg border border-dashed border-(--border-bright) text-(--text-secondary) hover:text-(--accent) hover:border-(--accent) transition-all flex items-center justify-center gap-2 text-sm font-medium"
