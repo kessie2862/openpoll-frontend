@@ -8,15 +8,7 @@ import { useExport } from '@/src/hooks/useExport';
 import { PageShell } from '@/src/components/layout/PageShell';
 import { Poll } from '@/src/types';
 import { formatDistanceToNow } from 'date-fns';
-import {
-  Plus,
-  BarChart2,
-  Users,
-  Copy,
-  Download,
-  X,
-  Rocket,
-} from 'lucide-react';
+import { BarChart2, Users, Copy, Download, X, Rocket } from 'lucide-react';
 import { useState } from 'react';
 
 export default function DashboardPage() {
@@ -53,11 +45,6 @@ export default function DashboardPage() {
             {polls.length} poll{polls.length !== 1 ? 's' : ''}
           </p>
         </div>
-        <Link href="/polls/new">
-          <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-(--accent) text-(--bg-base) font-bold text-sm hover:bg-(--accent-dim) transition-colors">
-            <Plus size={15} /> New poll
-          </button>
-        </Link>
       </div>
 
       {isLoading ? (
