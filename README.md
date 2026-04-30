@@ -1,4 +1,4 @@
-# 📊 OpenPoll
+# 📊 OpenPoll — Frontend
 
 <a name="readme-top"></a>
 
@@ -10,12 +10,12 @@
   - [Built With](#built-with)
   - [Key Features](#key-features)
   - [Live Demo](#live-demo)
+- [Backend](#backend)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Setup](#setup)
   - [Environment Variables](#environment-variables)
   - [Run Locally](#run-locally)
-- [Backend](#backend)
 - [Authors](#authors)
 - [Future Features](#future-features)
 - [Contributing](#contributing)
@@ -25,7 +25,7 @@
 
 ## 📖 About <a name="about"></a>
 
-OpenPoll is a full-stack poll and survey platform built with Django and Next.js. Create a poll, share the link or embed it anywhere with a one-line iframe snippet, and watch votes come in live.
+OpenPoll is a full-stack poll and survey platform. This repository contains the Next.js frontend. Create a poll, share the link or embed it anywhere with a one-line iframe snippet, and watch votes come in live.
 
 ### 🛠 Built With <a name="built-with"></a>
 
@@ -39,26 +39,15 @@ OpenPoll is a full-stack poll and survey platform built with Django and Next.js.
     <li><a href="https://www.framer.com/motion/">Framer Motion</a></li>
     <li><a href="https://tanstack.com/query">TanStack Query</a></li>
     <li><a href="https://zustand-demo.pmnd.rs/">Zustand</a></li>
-  </ul>
-</details>
-
-<details>
-  <summary>Backend</summary>
-  <ul>
-    <li><a href="https://www.djangoproject.com/">Django</a></li>
-    <li><a href="https://www.django-rest-framework.org/">Django REST Framework</a></li>
-    <li><a href="https://channels.readthedocs.io/">Django Channels</a></li>
-    <li><a href="https://github.com/django/daphne">Daphne</a></li>
-    <li><a href="https://redis.io/">Redis</a></li>
-    <li><a href="https://www.postgresql.org/">PostgreSQL</a></li>
+    <li><a href="https://react-hook-form.com/">React Hook Form</a></li>
+    <li><a href="https://zod.dev/">Zod</a></li>
   </ul>
 </details>
 
 <details>
   <summary>Deployment</summary>
   <ul>
-    <li><a href="https://vercel.com/">Vercel</a> — Frontend</li>
-    <li><a href="https://railway.app/">Railway</a> — Backend, PostgreSQL, Redis</li>
+    <li><a href="https://vercel.com/">Vercel</a></li>
   </ul>
 </details>
 
@@ -66,21 +55,30 @@ OpenPoll is a full-stack poll and survey platform built with Django and Next.js.
 
 ### ✨ Key Features <a name="key-features"></a>
 
-- **Real-time vote results** broadcast via Django Channels WebSockets
-- **Four question types** — single choice, multi-choice, ranked choice (IRV tallying), open text
+- **Real-time vote results** broadcast via WebSockets — no refresh needed
+- **Four question types** — single choice, multi-choice, ranked choice, open text
 - **Drag-to-rank UI** for ranked-choice questions
 - **Embeddable anywhere** via a one-line iframe snippet
-- **Vote fraud prevention** — IP + browser fingerprint deduplication per account
 - **Poll controls** — expiry dates, voter caps, password protection
 - **Results export** — download as CSV or PNG chart
 - **JWT authentication** with auto token refresh
+- **Live animated charts** powered by Recharts and Framer Motion
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### 🚀 Live Demo <a name="live-demo"></a>
 
-- [Frontend](https://openpoll-frontend.vercel.app)
-- [Backend API](https://web-production-65e27.up.railway.app/api/)
+- [Live App](https://openpoll-frontend.vercel.app)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+## 🔗 Backend <a name="backend"></a>
+
+> This is the frontend repository only. The backend is built with Django, Django Channels, and Django REST Framework — handling the REST API, WebSocket broadcasting, vote processing, and exports.
+
+👉 [OpenPoll Backend Repository](https://github.com/kessie2862/openpoll-backend)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -91,36 +89,30 @@ OpenPoll is a full-stack poll and survey platform built with Django and Next.js.
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/) v20+
-- [Python](https://www.python.org/) 3.12+
-- [PostgreSQL](https://www.postgresql.org/)
-- [Redis](https://redis.io/)
+- A running instance of the [OpenPoll backend](https://github.com/kessie2862/openpoll-backend)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Setup
 
 Clone the repository:
 
 ```sh
-git clone https://github.com/kessie2862/openpoll.git
-cd openpoll
+git clone https://github.com/kessie2862/openpoll-frontend.git
+cd openpoll-frontend
+```
+
+Install dependencies:
+
+```sh
+npm install
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Environment Variables <a name="environment-variables"></a>
 
-**Backend** — create `openpoll/.env`:
-
-```env
-SECRET_KEY=your-secret-key
-DB_NAME=openpoll_db
-DB_USER=openpoll_user
-DB_PASSWORD=yourpassword
-DB_HOST=localhost
-DB_PORT=5432
-REDIS_URL=redis://127.0.0.1:6379/0
-```
-
-**Frontend** — create `openpoll-web/.env.local`:
+Create a `.env.local` file in the project root:
 
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:8000/api
@@ -128,45 +120,25 @@ NEXT_PUBLIC_WS_URL=ws://localhost:8000
 NEXT_PUBLIC_EMBED_BASE_URL=http://localhost:8000/embed
 ```
 
+For production, point these at your deployed backend:
+
+```env
+NEXT_PUBLIC_API_URL=https://your-backend.up.railway.app/api
+NEXT_PUBLIC_WS_URL=wss://your-backend.up.railway.app
+NEXT_PUBLIC_EMBED_BASE_URL=https://your-backend.up.railway.app/embed
+```
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Run Locally <a name="run-locally"></a>
 
-**Backend:**
-
 ```sh
-cd openpoll
-python -m venv venv
-
-# Windows
-.\venv\Scripts\Activate.ps1
-# macOS/Linux
-source venv/bin/activate
-
-pip install -r requirements.txt
-python manage.py migrate
-daphne -p 8000 config.asgi:application
-```
-
-**Frontend:**
-
-```sh
-cd openpoll-web
-npm install
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
----
-
-## 🔗 Backend <a name="backend"></a>
-
-The backend is a separate Django application in the `openpoll/` directory of this repo. It handles the REST API, WebSocket broadcasting, vote processing, and exports.
-
-See the [backend README](./openpoll/README.md) for full setup and deployment instructions.
+> Make sure the backend is running on port 8000 before starting the frontend.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -198,7 +170,7 @@ See the [backend README](./openpoll/README.md) for full setup and deployment ins
 
 Contributions, issues, and feature requests are welcome.
 
-Feel free to check the [issues page](https://github.com/kessie2862/openpoll/issues).
+Feel free to check the [issues page](https://github.com/kessie2862/openpoll-frontend/issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
