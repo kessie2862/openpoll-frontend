@@ -10,13 +10,15 @@ import { useLiveResults } from '@/src/hooks/useLiveResults';
 import { PageShell } from '@/src/components/layout/PageShell';
 import { LiveResults } from '@/src/components/poll/LiveResults';
 import { VoteResponse } from '@/src/types';
-import { CheckCircle, Lock, Loader2 } from 'lucide-react';
+import { CheckCircle, Lock, Loader2, Share2 } from 'lucide-react';
+import { ShareModal } from '@/src/components/poll/ShareModal';
 import { RankedChoiceInput } from '@/src/components/poll/RankedChoiceInput';
 import Link from 'next/link';
 import { notify } from '@/src/lib/toast';
 
 export default function VotePage() {
   const { shortId } = useParams<{ shortId: string }>();
+  const [shareOpen, setShareOpen] = useState(false);
 
   const { submit, isSubmitting, hasVoted, error } = useVote(shortId);
 
@@ -158,10 +160,18 @@ export default function VotePage() {
               {poll.description}
             </p>
           )}
-          <p className="text-xs text-(--text-muted) mt-3 mono">
-            {poll.unique_voters.toLocaleString()} voter
-            {poll.unique_voters !== 1 ? 's' : ''}
-          </p>
+          <div className="flex items-center justify-between mt-3">
+            <p className="text-xs text-(--text-muted) mono">
+              {poll.unique_voters.toLocaleString()} voter
+              {poll.unique_voters !== 1 ? 's' : ''}
+            </p>
+            <button
+              onClick={() => setShareOpen(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-(--border) text-xs font-semibold text-(--text-secondary) hover:text-(--accent) hover:border-(--accent-dim) transition-colors"
+            >
+              <Share2 size={12} /> Share & Embed
+            </button>
+          </div>
         </div>
 
         <AnimatePresence mode="wait">
@@ -343,6 +353,13 @@ export default function VotePage() {
           )}
         </AnimatePresence>
       </div>
+      {poll && (
+        <ShareModal
+          poll={poll}
+          open={shareOpen}
+          onClose={() => setShareOpen(false)}
+        />
+      )}
     </PageShell>
   );
 }

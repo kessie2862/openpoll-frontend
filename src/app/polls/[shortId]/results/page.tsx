@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
@@ -17,7 +18,9 @@ import {
 import { pollsApi } from '@/src/lib/api';
 import { useLiveResults } from '@/src/hooks/useLiveResults';
 import { useExport } from '@/src/hooks/useExport';
+import { useAuthStore } from '@/src/store/auth';
 import { PageShell } from '@/src/components/layout/PageShell';
+import { ShareModal } from '@/src/components/poll/ShareModal';
 import { QuestionResult } from '@/src/types';
 import { formatDistanceToNow, format } from 'date-fns';
 import {
@@ -29,6 +32,7 @@ import {
   Wifi,
   WifiOff,
   RefreshCw,
+  Share2,
 } from 'lucide-react';
 
 // Chart color palette
@@ -47,6 +51,8 @@ export default function ResultsPage() {
   const { shortId } = useParams<{ shortId: string }>();
   const router = useRouter();
   const { exportCSV, exportPNG, isExporting } = useExport(shortId);
+  const { user } = useAuthStore();
+  const [shareOpen, setShareOpen] = useState(false);
 
   const { data: poll } = useQuery({
     queryKey: ['poll', shortId],
@@ -117,10 +123,33 @@ export default function ResultsPage() {
           </p>
         </div>
 
-        {/* Export */}
-        <div className="flex gap-2">
-          <ExportBtn onClick={exportCSV} disabled={isExporting} label="CSV" />
-          <ExportBtn onClick={exportPNG} disabled={isExporting} label="PNG" />
+        {/* Actions */}
+        <div className="flex gap-2 items-center flex-wrap">
+          {/* Share  */}
+          <button
+            onClick={() => setShareOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-(--border) text-xs font-semibold text-(--text-secondary) hover:text-(--accent) hover:border-(--accent-dim) transition-colors"
+          >
+            <Share2 size={12} /> Share & Embed
+          </button>
+
+          {/* Export */}
+          {user &&
+            results.creator &&
+            String(user.id) === String(results.creator.id) && (
+              <>
+                <ExportBtn
+                  onClick={exportCSV}
+                  disabled={isExporting}
+                  label="CSV"
+                />
+                <ExportBtn
+                  onClick={exportPNG}
+                  disabled={isExporting}
+                  label="PNG"
+                />
+              </>
+            )}
         </div>
       </div>
 
@@ -200,6 +229,15 @@ export default function ResultsPage() {
           </motion.div>
         ))}
       </div>
+
+      {/* Share Modal */}
+      {poll && (
+        <ShareModal
+          poll={poll}
+          open={shareOpen}
+          onClose={() => setShareOpen(false)}
+        />
+      )}
     </PageShell>
   );
 }
@@ -248,7 +286,6 @@ function HorizontalBarSection({ question }: { question: QuestionResult }) {
               fontFamily: 'JetBrains Mono',
               fontSize: 12,
             }}
-            // `item.payload` is optional per Recharts types — guard with nullish coalescing
             formatter={(val, _name, item) => {
               const pct = item?.payload?.pct ?? 0;
               return [`${val ?? 0} votes (${pct}%)`, ''];
@@ -488,7 +525,7 @@ function ExportBtn({
     <button
       onClick={onClick}
       disabled={disabled}
-      className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-(--border) text-xs font-semibold text-(--text-secondary) hover:text-[var(--text-primary)] hover:border-[var(--border-bright)] transition-colors disabled:opacity-40"
+      className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-(--border) text-xs font-semibold text-(--text-secondary) hover:text-(--text-primary) hover:border-(--border-bright) transition-colors disabled:opacity-40"
     >
       <Download size={12} />
       {label}
