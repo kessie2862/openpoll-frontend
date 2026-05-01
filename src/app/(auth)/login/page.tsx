@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -17,7 +17,7 @@ const schema = z.object({
 });
 type FormData = z.infer<typeof schema>;
 
-export default function LoginPage() {
+function LoginContent() {
   const router = useRouter();
   const { login, isLoading } = useAuthStore();
   const [serverError, setServerError] = useState('');
@@ -151,5 +151,13 @@ export default function LoginPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginContent />
+    </Suspense>
   );
 }
