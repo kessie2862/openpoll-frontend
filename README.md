@@ -178,7 +178,7 @@ Feel free to check the [issues page](https://github.com/kessie2862/openpoll-fron
 
 ## ⭐️ Show your support <a name="support"></a>
 
-If you found this project useful, give it a ⭐️ — it helps a lot.
+If you found this project useful, give it a ⭐️. It helps a lot.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
