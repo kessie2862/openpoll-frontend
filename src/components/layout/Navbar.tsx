@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { BarChart2, Plus, LogOut } from 'lucide-react';
 import { useAuthStore } from '@/src/store/auth';
 import { Button } from '../ui/button';
@@ -9,6 +9,12 @@ import { Button } from '../ui/button';
 export function Navbar() {
   const { isAuthenticated, logout } = useAuthStore();
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    logout();
+    router.push('/');
+  };
 
   return (
     <header className="sticky top-0 z-50 border-b border-(--border) bg-(--bg-base)/90 backdrop-blur-md">
@@ -48,7 +54,7 @@ export function Navbar() {
                 </Button>
               </Link>
               <button
-                onClick={logout}
+                onClick={handleLogout}
                 className="text-(--text-secondary) hover:text-(--text-primary) transition-colors"
                 title="Sign out"
               >
