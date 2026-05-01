@@ -68,14 +68,23 @@ export const authApi = {
       email,
       password,
     });
+
     localStorage.setItem('access_token', data.access);
     localStorage.setItem('refresh_token', data.refresh);
+
+    document.cookie = `access_token=${data.access}; path=/; max-age=${60 * 60}; SameSite=Lax`;
+    document.cookie = `refresh_token=${data.refresh}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Lax`;
+
     return data;
   },
 
   logout: () => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
+
+    // Clear cookies
+    document.cookie = 'access_token=; path=/; max-age=0';
+    document.cookie = 'refresh_token=; path=/; max-age=0';
   },
 
   me: () => api.get<User>('/auth/me/'),
