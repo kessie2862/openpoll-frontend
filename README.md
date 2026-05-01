@@ -1,8 +1,8 @@
-# 📊 OpenPoll — Frontend
+# 📊 OpenPoll-Frontend
 
 <a name="readme-top"></a>
 
-> Build and share polls that show live results as people vote. Supports single-choice, multi-choice, ranked-choice, and open text questions. Results update in real time via WebSockets — no refresh needed.
+> Build and share polls that show live results as people vote. Supports single-choice, multi-choice, ranked-choice, and open text questions. Results update in real time via WebSockets with no refresh needed.
 
 ## 📗 Table of Contents
 
@@ -55,14 +55,14 @@ OpenPoll is a full-stack poll and survey platform. This repository contains the 
 
 ### ✨ Key Features <a name="key-features"></a>
 
-- **Real-time vote results** broadcast via WebSockets — no refresh needed
-- **Four question types** — single choice, multi-choice, ranked choice, open text
-- **Drag-to-rank UI** for ranked-choice questions
-- **Embeddable anywhere** via a one-line iframe snippet
-- **Poll controls** — expiry dates, voter caps, password protection
-- **Results export** — download as CSV or PNG chart
-- **JWT authentication** with auto token refresh
-- **Live animated charts** powered by Recharts and Framer Motion
+- **Real-time vote results** - broadcast via WebSockets with no refresh needed
+- **Four question types** - single choice, multi-choice, ranked choice, open text
+- **Drag-to-rank UI** - for ranked-choice questions
+- **Embeddable anywhere** - via a one-line iframe snippet
+- **Poll controls** - expiry dates, voter caps, password protection
+- **Results export** - download as CSV or PNG chart
+- **JWT authentication** - with auto token refresh
+- **Live animated charts** - powered by Recharts and Framer Motion
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -76,7 +76,7 @@ OpenPoll is a full-stack poll and survey platform. This repository contains the 
 
 ## 🔗 Backend <a name="backend"></a>
 
-> This is the frontend repository only. The backend is built with Django, Django Channels, and Django REST Framework — handling the REST API, WebSocket broadcasting, vote processing, and exports.
+> This is the frontend repository only. The backend is built with Django, Django Channels, and Django REST Framework handling the REST API, WebSocket broadcasting, vote processing, and exports.
 
 👉 [OpenPoll Backend Repository](https://github.com/kessie2862/openpoll-backend)
 
@@ -157,10 +157,10 @@ Open [http://localhost:3000](http://localhost:3000)
 
 ## 🔭 Future Features <a name="future-features"></a>
 
-- [ ] Poll analytics — votes over time, peak voting hours
+- [ ] Poll analytics - votes over time, peak voting hours
 - [ ] Email notifications when polls hit milestones
-- [ ] Poll duplication — clone an existing poll as a draft
-- [ ] Voter receipt — email confirmation after voting
+- [ ] Poll duplication - clone an existing poll as a draft
+- [ ] Voter receipt - email confirmation after voting
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
